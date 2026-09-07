@@ -1,6 +1,7 @@
 package com.marcohelmut.foodreviewapp.controllers;
 
 import com.marcohelmut.foodreviewapp.entities.Food;
+import com.marcohelmut.foodreviewapp.entities.Review;
 import com.marcohelmut.foodreviewapp.entities.Stall;
 import com.marcohelmut.foodreviewapp.services.AppService;
 import jakarta.validation.Valid;
@@ -33,5 +34,11 @@ public class AppController {
     public ResponseEntity<Food> createFood(@Valid @RequestBody Food food) {
         Food savedFood = appService.saveFood(food);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
+    }
+
+    @PostMapping("/reviews")
+    public ResponseEntity<Review> createReview(@Valid @RequestBody Review review) {
+        Review savedReview = appService.saveReview(review);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
     }
 }

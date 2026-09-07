@@ -2,6 +2,7 @@ package com.marcohelmut.foodreviewapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -13,14 +14,17 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Please review its priceworthiness")
     @Column(name = "price_score", nullable = false)
-    private int priceScore;
+    private Integer priceScore;
 
+    @NotNull(message = "Please review its taste")
     @Column(name = "taste_score", nullable = false)
-    private int tasteScore;
+    private Integer tasteScore;
 
+    @NotNull(message = "Please review stall cleanliness at purchase time")
     @Column(name = "cleanliness_score", nullable = false)
-    private int cleanlinessScore;
+    private Integer cleanlinessScore;
 
     @Column(name = "comment", length = 100, nullable = true)
     private String comment;

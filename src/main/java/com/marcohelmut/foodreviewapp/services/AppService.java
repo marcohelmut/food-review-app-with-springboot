@@ -1,6 +1,7 @@
 package com.marcohelmut.foodreviewapp.services;
 
 import com.marcohelmut.foodreviewapp.entities.Food;
+import com.marcohelmut.foodreviewapp.entities.Review;
 import com.marcohelmut.foodreviewapp.entities.Stall;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.ReviewRepository;
@@ -31,5 +32,9 @@ public class AppService {
     public Food saveFood(Food food) {
         food.setName(food.getName().trim());
         return foodRepository.save(food);
+    }
+
+    public Review saveReview(Review review) {
+        return reviewRepository.save(review);
     }
 }
