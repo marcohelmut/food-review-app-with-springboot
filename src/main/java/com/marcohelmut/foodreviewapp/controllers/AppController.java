@@ -23,13 +23,13 @@ public class AppController {
         this.appService = appService;
     }
 
-    @PostMapping
+    @PostMapping("/stalls")
     public ResponseEntity<Stall> createStall(@Valid @RequestBody Stall stall) {
         Stall savedStall = appService.saveStall(stall);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStall);
     }
 
-    @PostMapping
+    @PostMapping("/foods")
     public ResponseEntity<Food> createFood(@Valid @RequestBody Food food) {
         Food savedFood = appService.saveFood(food);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
