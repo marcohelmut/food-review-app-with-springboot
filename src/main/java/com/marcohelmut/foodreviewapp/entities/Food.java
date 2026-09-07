@@ -2,6 +2,9 @@ package com.marcohelmut.foodreviewapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +18,16 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Food name cannot be empty")
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull(message = "Price cannot be empty")
+    @Positive(message = "Price must be valid")
     @Column(name = "price", nullable = false)
-    private double price;
+    private Double price;
 
+    @NotNull(message = "Food must have a stall")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stall_id", nullable = false)
     @JsonIgnore

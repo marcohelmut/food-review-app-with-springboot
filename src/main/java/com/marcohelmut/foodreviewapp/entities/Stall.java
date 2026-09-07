@@ -1,6 +1,7 @@
 package com.marcohelmut.foodreviewapp.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Stall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Stall name cannot be empty")
     @Column(name = "name", nullable = false)
     private String name;
 

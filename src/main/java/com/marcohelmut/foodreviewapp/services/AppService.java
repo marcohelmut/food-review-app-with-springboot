@@ -1,5 +1,6 @@
 package com.marcohelmut.foodreviewapp.services;
 
+import com.marcohelmut.foodreviewapp.entities.Food;
 import com.marcohelmut.foodreviewapp.entities.Stall;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.ReviewRepository;
@@ -22,13 +23,13 @@ public class AppService {
         this.reviewRepository = reviewRepository;
     }
 
-    @Transactional
     public Stall saveStall(Stall stall) {
-        if (stall.getName() == null || stall.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Stall name cannot be empty");
-        }
-
         stall.setName(stall.getName().trim());
         return stallRepository.save(stall);
+    }
+
+    public Food saveFood(Food food) {
+        food.setName(food.getName().trim());
+        return foodRepository.save(food);
     }
 }
