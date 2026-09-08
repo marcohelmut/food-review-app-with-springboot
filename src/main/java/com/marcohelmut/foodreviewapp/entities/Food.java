@@ -33,6 +33,7 @@ public class Food {
     @JsonIgnore
     private Stall stall;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
