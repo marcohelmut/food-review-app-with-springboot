@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
-@Entity
+@Entity(name = "Review")
 @Table(name = "reviews")
 public class Review {
 
@@ -34,7 +34,7 @@ public class Review {
     @JsonIgnore
     private Food food;
 
-    public Review() {}
+    protected Review() {}
 
     public Review(int priceScore, int tasteScore, int cleanlinessScore, String comment) {
         this.priceScore = priceScore;
@@ -91,15 +91,4 @@ public class Review {
         this.food = food;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Review review = (Review) o;
-        return Objects.equals(id, review.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }

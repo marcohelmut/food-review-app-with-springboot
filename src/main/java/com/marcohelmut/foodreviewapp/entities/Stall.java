@@ -6,8 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Entity
+@Entity(name = "Stall")
 @Table(name = "stalls")
 public class Stall {
 
@@ -23,7 +24,7 @@ public class Stall {
     @OneToMany(mappedBy = "stall", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Food> foods = new ArrayList<>();
 
-    public Stall() {}
+    protected Stall() {}
 
     public Stall(String name) {
         this.name = name;
@@ -62,4 +63,5 @@ public class Stall {
     public void setFoods(List<Food> foods) {
         this.foods = foods;
     }
+
 }

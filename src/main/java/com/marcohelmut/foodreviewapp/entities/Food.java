@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "Food")
 @Table(name = "foods")
 public class Food {
 
@@ -37,7 +37,7 @@ public class Food {
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-    public Food() {}
+    protected Food() {}
 
     public Food(String name, double price) {
         this.name = name;
@@ -86,15 +86,4 @@ public class Food {
         this.price = price;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Food food = (Food) o;
-        return Objects.equals(id, food.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }

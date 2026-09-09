@@ -45,8 +45,8 @@ public class AppController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
     }
 
-    @GetMapping("/stalls")
-    public ResponseEntity<Stall> getStallByName(@RequestParam String name) {
+    @GetMapping("/stalls/{name}")
+    public ResponseEntity<Stall> getStallByName(@PathVariable String name) {
         Stall stall = stallService.getStallByName(name);
         return ResponseEntity.ok(stall);
     }
