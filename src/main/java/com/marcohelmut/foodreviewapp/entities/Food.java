@@ -62,12 +62,16 @@ public class Food {
         return name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
     public Stall getStall() {
         return stall;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public void setId(Long id) {
@@ -82,8 +86,12 @@ public class Food {
         this.stall = stall;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
 }

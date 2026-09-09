@@ -14,7 +14,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Please review its priceworthiness")
+    @NotNull(message = "Please review its price worthiness")
     @Column(name = "price_score", nullable = false)
     private Integer priceScore;
 
@@ -29,6 +29,7 @@ public class Review {
     @Column(name = "comment", length = 100, nullable = true)
     private String comment;
 
+    @NotNull(message = "A review must have a food associated with it")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id", nullable = false)
     @JsonIgnore
@@ -36,7 +37,7 @@ public class Review {
 
     protected Review() {}
 
-    public Review(int priceScore, int tasteScore, int cleanlinessScore, String comment) {
+    public Review(Integer priceScore, Integer tasteScore, Integer cleanlinessScore, String comment) {
         this.priceScore = priceScore;
         this.tasteScore = tasteScore;
         this.cleanlinessScore = cleanlinessScore;
@@ -47,15 +48,15 @@ public class Review {
         return id;
     }
 
-    public int getPriceScore() {
+    public Integer getPriceScore() {
         return priceScore;
     }
 
-    public int getTasteScore() {
+    public Integer getTasteScore() {
         return tasteScore;
     }
 
-    public int getCleanlinessScore() {
+    public Integer getCleanlinessScore() {
         return cleanlinessScore;
     }
 
@@ -71,15 +72,15 @@ public class Review {
         this.id = id;
     }
 
-    public void setPriceScore(int priceScore) {
+    public void setPriceScore(Integer priceScore) {
         this.priceScore = priceScore;
     }
 
-    public void setTasteScore(int tasteScore) {
+    public void setTasteScore(Integer tasteScore) {
         this.tasteScore = tasteScore;
     }
 
-    public void setCleanlinessScore(int cleanlinessScore) {
+    public void setCleanlinessScore(Integer cleanlinessScore) {
         this.cleanlinessScore = cleanlinessScore;
     }
 
