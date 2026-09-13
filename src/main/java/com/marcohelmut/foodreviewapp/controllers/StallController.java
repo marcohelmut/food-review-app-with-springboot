@@ -25,7 +25,7 @@ public class StallController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStall);
     }
 
-    @GetMapping("/stalls/{name}")
+    @GetMapping("/{name}")
     public ResponseEntity<Stall> getStallByName(@PathVariable String name) {
         Stall stall = stallService.getStallByName(name);
         return ResponseEntity.ok(stall);

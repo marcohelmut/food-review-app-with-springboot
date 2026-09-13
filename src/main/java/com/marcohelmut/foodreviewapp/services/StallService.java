@@ -23,7 +23,7 @@ public class StallService {
     }
 
     public Stall getStallByName(String name) {
-        return stallRepository.findByName(name)
+        return stallRepository.findByNameIgnoreCase(name.trim())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stall not found"));
     }
 

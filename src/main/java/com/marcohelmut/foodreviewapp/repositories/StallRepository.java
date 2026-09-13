@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface StallRepository extends JpaRepository<Stall, Long> {
-    Optional<Stall> findByName(String name);
+    Optional<Stall> findByNameIgnoreCase(String name);
 }
