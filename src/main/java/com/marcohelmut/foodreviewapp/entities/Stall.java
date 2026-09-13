@@ -22,7 +22,7 @@ public class Stall {
     @OneToMany(mappedBy = "stall", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Food> foods = new ArrayList<>();
 
-    protected Stall() {}
+    public Stall() {}
 
     public Stall(String name) {
         this.name = name;

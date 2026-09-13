@@ -26,7 +26,7 @@ public class Review {
     @JoinColumn(name = "food_id", nullable = false)
     private Food food;
 
-    protected Review() {}
+    public Review() {}
 
     public Review(Integer priceScore, Integer tasteScore, Integer cleanlinessScore, String comment) {
         this.priceScore = priceScore;

@@ -1,11 +1,12 @@
 package com.marcohelmut.foodreviewapp.services;
 
+import com.marcohelmut.foodreviewapp.dtos.stalldtos.CreateStallDto;
+import com.marcohelmut.foodreviewapp.dtos.stalldtos.StallResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Stall;
+import com.marcohelmut.foodreviewapp.exceptions.stallexceptions.StallNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.StallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class StallService {
@@ -17,14 +18,32 @@ public class StallService {
         this.stallRepository = stallRepository;
     }
 
-    public Stall saveStall(Stall stall) {
-        stall.setName(stall.getName().trim());
-        return stallRepository.save(stall);
+    public StallResponseDto saveStall(CreateStallDto dto) {
+        Stall stall = new Stall();
+        stall.setName(dto.name().trim());
+        stall.setPhotoFilePath(dto.photoFilePath());
+
+        Stall savedStall = stallRepository.save(stall);
+
+        return new StallResponseDto(
+                savedStall.getId(),
+                savedStall.getName(),
+                savedStall.getPhotoFilePath()
+        );
     }
 
-    public Stall getStallByName(String name) {
+    public StallResponseDto getStallByName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Stall name must not be blank");
+        }
+
         return stallRepository.findByNameIgnoreCase(name.trim())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stall not found"));
+                .map(stall -> new StallResponseDto(
+                        stall.getId(),
+                        stall.getName(),
+                        stall.getPhotoFilePath()
+                ))
+                .orElseThrow(() -> new StallNotFoundException(name));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.marcohelmut.foodreviewapp.controllers;
 
-import com.marcohelmut.foodreviewapp.entities.Stall;
+import com.marcohelmut.foodreviewapp.dtos.stalldtos.CreateStallDto;
+import com.marcohelmut.foodreviewapp.dtos.stalldtos.StallResponseDto;
 import com.marcohelmut.foodreviewapp.services.StallService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,14 @@ public class StallController {
     }
 
     @PostMapping
-    public ResponseEntity<Stall> createStall(@Valid @RequestBody Stall stall) {
-        Stall savedStall = stallService.saveStall(stall);
+    public ResponseEntity<StallResponseDto> createStall(@Valid @RequestBody CreateStallDto dto) {
+        StallResponseDto savedStall = stallService.saveStall(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStall);
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Stall> getStallByName(@PathVariable String name) {
-        Stall stall = stallService.getStallByName(name);
+    public ResponseEntity<StallResponseDto> getStallByName(@PathVariable String name) {
+        StallResponseDto stall = stallService.getStallByName(name);
         return ResponseEntity.ok(stall);
     }
 

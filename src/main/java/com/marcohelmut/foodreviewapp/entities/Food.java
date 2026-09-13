@@ -29,7 +29,7 @@ public class Food {
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-    protected Food() {}
+    public Food() {}
 
     public Food(String name, double price) {
         this.name = name;
