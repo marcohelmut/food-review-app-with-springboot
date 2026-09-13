@@ -1,12 +1,9 @@
 package com.marcohelmut.foodreviewapp.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "Stall")
 @Table(name = "stalls")
@@ -16,11 +13,12 @@ public class Stall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Stall name cannot be empty")
     @Column(name = "name", nullable = false)
     private String name;
 
-    @JsonIgnore
+    @Column(name = "photo_file_path")
+    private String photoFilePath;
+
     @OneToMany(mappedBy = "stall", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Food> foods = new ArrayList<>();
 
@@ -48,6 +46,10 @@ public class Stall {
         return name;
     }
 
+    public String getPhotoFilePath() {
+        return photoFilePath;
+    }
+
     public List<Food> getFoods() {
         return foods;
     }
@@ -58,6 +60,10 @@ public class Stall {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPhotoFilePath(String photoFilePath) {
+        this.photoFilePath = photoFilePath;
     }
 
     public void setFoods(List<Food> foods) {
