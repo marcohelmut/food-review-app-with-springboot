@@ -1,5 +1,7 @@
 package com.marcohelmut.foodreviewapp.controllers;
 
+import com.marcohelmut.foodreviewapp.dtos.fooddtos.CreateFoodDto;
+import com.marcohelmut.foodreviewapp.dtos.fooddtos.FoodResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Food;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.services.FoodService;
@@ -25,8 +27,8 @@ public class FoodController {
     }
 
     @PostMapping
-    public ResponseEntity<Food> createFood(@Valid @RequestBody Food food) {
-        Food savedFood = foodService.saveFood(food);
+    public ResponseEntity<FoodResponseDto> createFood(@Valid @RequestBody CreateFoodDto food) {
+        FoodResponseDto savedFood = foodService.saveFood(food);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
     }
 
