@@ -8,6 +8,8 @@ import com.marcohelmut.foodreviewapp.repositories.StallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StallService {
 
@@ -44,6 +46,22 @@ public class StallService {
                         stall.getPhotoFilePath()
                 ))
                 .orElseThrow(() -> new StallNotFoundException(name));
+    }
+
+    public List<StallResponseDto> getStalls() {
+        List<Stall> stalls = stallRepository.findAll();
+
+        if (stalls.isEmpty()) {
+            throw new StallNotFoundException("No Stall Data Available");
+        }
+
+        return stalls.stream()
+                .map(stall -> new StallResponseDto(
+                        stall.getId(),
+                        stall.getName(),
+                        stall.getPhotoFilePath()
+                ))
+                .toList();
     }
 
 }
