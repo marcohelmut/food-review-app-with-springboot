@@ -8,6 +8,7 @@ import com.marcohelmut.foodreviewapp.repositories.StallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -24,6 +25,7 @@ public class StallService {
         Stall stall = new Stall();
         stall.setName(dto.name().trim());
         stall.setPhotoFilePath(dto.photoFilePath());
+        stall.setCreatedAt(Instant.now());
 
         Stall savedStall = stallRepository.save(stall);
 

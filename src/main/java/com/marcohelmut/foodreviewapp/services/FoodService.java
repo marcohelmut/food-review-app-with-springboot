@@ -9,6 +9,8 @@ import com.marcohelmut.foodreviewapp.repositories.StallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 public class FoodService {
 
@@ -29,6 +31,7 @@ public class FoodService {
         food.setPrice(dto.price());
         food.setStall(stall);
         food.setPhotoFilePath(dto.foodPhotoFilePath());
+        food.setCreatedAt(Instant.now());
 
         Food savedFood = foodRepository.save(food);
 

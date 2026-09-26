@@ -1,7 +1,9 @@
 package com.marcohelmut.foodreviewapp.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class Food {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "photo_file_path")
+    @Column(name = "photo_file_path", nullable = false)
     private String photoFilePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,6 +30,13 @@ public class Food {
 
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
+
+    @ColumnDefault("now()")
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
     public Food() {}
 
@@ -70,6 +79,14 @@ public class Food {
         return reviews;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -94,4 +111,11 @@ public class Food {
         this.reviews = reviews;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

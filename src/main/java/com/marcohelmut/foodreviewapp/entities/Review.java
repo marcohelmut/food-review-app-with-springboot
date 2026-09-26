@@ -1,6 +1,9 @@
 package com.marcohelmut.foodreviewapp.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+
+import java.time.Instant;
 
 @Entity(name = "Review")
 @Table(name = "reviews")
@@ -25,6 +28,13 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id", nullable = false)
     private Food food;
+
+    @ColumnDefault("now()")
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
     public Review() {}
 
@@ -59,6 +69,14 @@ public class Review {
         return food;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -83,4 +101,11 @@ public class Review {
         this.food = food;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
