@@ -1,5 +1,6 @@
 package com.marcohelmut.foodreviewapp.exceptions;
 
+import com.marcohelmut.foodreviewapp.exceptions.foodexceptions.FoodNotFoundException;
 import com.marcohelmut.foodreviewapp.exceptions.stallexceptions.StallNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,5 +18,10 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
+    @ExceptionHandler(FoodNotFoundException.class)
+        public ResponseEntity<Map<String, String>> handleFoodNotFound(FoodNotFoundException e) {
+            Map<String, String> response = Map.of("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
 
 }

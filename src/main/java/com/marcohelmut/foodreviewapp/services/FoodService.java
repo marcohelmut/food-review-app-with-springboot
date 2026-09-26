@@ -4,12 +4,14 @@ import com.marcohelmut.foodreviewapp.dtos.fooddtos.CreateFoodDto;
 import com.marcohelmut.foodreviewapp.dtos.fooddtos.FoodResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Food;
 import com.marcohelmut.foodreviewapp.entities.Stall;
+import com.marcohelmut.foodreviewapp.exceptions.foodexceptions.FoodNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.StallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class FoodService {
@@ -42,6 +44,24 @@ public class FoodService {
                 savedFood.getStall().getId(),
                 savedFood.getPhotoFilePath()
         );
+    }
+
+    public List<FoodResponseDto> getFoodsByStall(Long id) {
+        List<Food> foods = foodRepository.findByStallId(id);
+
+        if (foods.isEmpty()) {
+            throw new FoodNotFoundException("No food data for this stall");
+        }
+
+        return foods.stream()
+                .map(food -> new FoodResponseDto(
+                        food.getId(),
+                        food.getName(),
+                        food.getPrice(),
+                        food.getStall().getId(),
+                        food.getPhotoFilePath()
+                ))
+                .toList();
     }
 
 }
