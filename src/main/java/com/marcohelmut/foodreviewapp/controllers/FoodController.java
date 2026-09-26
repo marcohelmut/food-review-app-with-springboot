@@ -31,10 +31,16 @@ public class FoodController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<FoodResponseDto>> getFoodsByStall(@PathVariable Long id) {
-        List<FoodResponseDto> list = foodService.getFoodsByStall(id);
+    @GetMapping("/stall/{stallId}")
+    public ResponseEntity<List<FoodResponseDto>> getFoodsByStall(@PathVariable Long stallId) {
+        List<FoodResponseDto> list = foodService.getFoodsByStall(stallId);
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FoodResponseDto> getFoodById(@PathVariable Long id) {
+        FoodResponseDto food = foodService.getFoodById(id);
+        return ResponseEntity.ok(food);
     }
 
 }

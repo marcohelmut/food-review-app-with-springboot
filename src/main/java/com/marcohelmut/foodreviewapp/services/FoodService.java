@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodService {
@@ -62,6 +63,18 @@ public class FoodService {
                         food.getPhotoFilePath()
                 ))
                 .toList();
+    }
+
+    public FoodResponseDto getFoodById(Long id) {
+        return foodRepository.findById(id)
+                .map(food -> new FoodResponseDto(
+                        food.getId(),
+                        food.getName(),
+                        food.getPrice(),
+                        food.getStall().getId(),
+                        food.getPhotoFilePath()
+                ))
+                .orElseThrow(() -> new FoodNotFoundException("No food found with id " + id));
     }
 
 }
