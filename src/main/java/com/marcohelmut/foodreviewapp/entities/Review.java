@@ -13,6 +13,9 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "student_number", nullable = false)
+    private Integer studentNumber;
+
     @Column(name = "price_score", nullable = false)
     private Integer priceScore;
 
@@ -49,6 +52,10 @@ public class Review {
         return id;
     }
 
+    public Integer getStudentNumber() {
+        return studentNumber;
+    }
+
     public Integer getPriceScore() {
         return priceScore;
     }
@@ -79,6 +86,10 @@ public class Review {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setStudentNumber(Integer studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
     public void setPriceScore(Integer priceScore) {
