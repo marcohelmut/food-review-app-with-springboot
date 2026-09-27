@@ -8,6 +8,7 @@ import com.marcohelmut.foodreviewapp.exceptions.foodexceptions.FoodNotFoundExcep
 import com.marcohelmut.foodreviewapp.exceptions.stallexceptions.StallNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.StallRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +75,13 @@ public class FoodService {
                         food.getPhotoFilePath()
                 ))
                 .orElseThrow(() -> new FoodNotFoundException("No food found with id " + id));
+    }
+
+    @Transactional
+    public void deleteFood(Long id) {
+        Food food = foodRepository.findById(id)
+                .orElseThrow(() -> new FoodNotFoundException("Food with id " + id + " does not exist"));
+        foodRepository.delete(food);
     }
 
 }

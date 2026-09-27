@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 
@@ -41,6 +42,12 @@ public class FoodController {
     public ResponseEntity<FoodResponseDto> getFoodById(@PathVariable Long id) {
         FoodResponseDto food = foodService.getFoodById(id);
         return ResponseEntity.ok(food);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteFoodById(@PathVariable Long id) {
+        foodService.deleteFood(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
