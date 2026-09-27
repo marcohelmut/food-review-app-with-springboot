@@ -5,6 +5,7 @@ import com.marcohelmut.foodreviewapp.dtos.stalldtos.StallResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Stall;
 import com.marcohelmut.foodreviewapp.exceptions.stallexceptions.StallNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.StallRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,19 +52,20 @@ public class StallService {
     }
 
     public List<StallResponseDto> getStalls() {
-        List<Stall> stalls = stallRepository.findAll();
-
-        if (stalls.isEmpty()) {
-            throw new StallNotFoundException("No Stall Data Available");
-        }
-
-        return stalls.stream()
+        return stallRepository.findAll().stream()
                 .map(stall -> new StallResponseDto(
                         stall.getId(),
                         stall.getName(),
                         stall.getPhotoFilePath()
                 ))
                 .toList();
+    }
+
+    @Transactional
+    public void deleteStall(Long id) {
+        Stall stall = stallRepository.findById(id)
+                .orElseThrow(() -> new StallNotFoundException("Stall with id " + id + " does not exist"));
+        stallRepository.delete(stall);
     }
 
 }

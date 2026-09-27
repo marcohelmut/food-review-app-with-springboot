@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Food")
+@Entity
 @Table(name = "foods")
 public class Food {
 
@@ -40,9 +40,10 @@ public class Food {
 
     public Food() {}
 
-    public Food(String name, double price) {
+    public Food(String name, double price, String photoFilePath) {
         this.name = name;
         this.price = price;
+        this.photoFilePath = photoFilePath;
     }
 
     public void addReview(Review review) {

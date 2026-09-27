@@ -5,6 +5,7 @@ import com.marcohelmut.foodreviewapp.dtos.fooddtos.FoodResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Food;
 import com.marcohelmut.foodreviewapp.entities.Stall;
 import com.marcohelmut.foodreviewapp.exceptions.foodexceptions.FoodNotFoundException;
+import com.marcohelmut.foodreviewapp.exceptions.stallexceptions.StallNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.StallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FoodService {
@@ -27,7 +27,8 @@ public class FoodService {
     }
 
     public FoodResponseDto saveFood(CreateFoodDto dto) {
-        Stall stall = stallRepository.getReferenceById(dto.stallId());
+        Stall stall = stallRepository.findById(dto.stallId())
+                .orElseThrow(() -> new StallNotFoundException("Stall with id " + dto.stallId() + " does not exist"));
 
         Food food = new Food();
         food.setName(dto.name());
@@ -48,13 +49,11 @@ public class FoodService {
     }
 
     public List<FoodResponseDto> getFoodsByStall(Long id) {
-        List<Food> foods = foodRepository.findByStallId(id);
-
-        if (foods.isEmpty()) {
-            throw new FoodNotFoundException("No food data for this stall");
+        if (!stallRepository.existsById(id)) {
+            throw new StallNotFoundException("Stall with id " + id + " does not exist");
         }
 
-        return foods.stream()
+        return foodRepository.findByStallId(id).stream()
                 .map(food -> new FoodResponseDto(
                         food.getId(),
                         food.getName(),

@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Stall")
+@Entity
 @Table(name = "stalls")
 public class Stall {
 
@@ -26,8 +26,9 @@ public class Stall {
 
     public Stall() {}
 
-    public Stall(String name) {
+    public Stall(String name, String photoFilePath) {
         this.name = name;
+        this.photoFilePath = photoFilePath;
     }
 
     public void addFood(Food food) {

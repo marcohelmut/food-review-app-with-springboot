@@ -5,7 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
-@Entity(name = "Review")
+@Entity
 @Table(name = "reviews")
 public class Review {
 
@@ -41,7 +41,8 @@ public class Review {
 
     public Review() {}
 
-    public Review(Integer priceScore, Integer tasteScore, Integer cleanlinessScore, String comment) {
+    public Review(Integer studentNumber, Integer priceScore, Integer tasteScore, Integer cleanlinessScore, String comment) {
+        this.studentNumber = studentNumber;
         this.priceScore = priceScore;
         this.tasteScore = tasteScore;
         this.cleanlinessScore = cleanlinessScore;

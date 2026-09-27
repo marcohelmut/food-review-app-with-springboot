@@ -4,6 +4,7 @@ import com.marcohelmut.foodreviewapp.dtos.reviewdtos.CreateReviewDto;
 import com.marcohelmut.foodreviewapp.dtos.reviewdtos.ReviewResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Food;
 import com.marcohelmut.foodreviewapp.entities.Review;
+import com.marcohelmut.foodreviewapp.exceptions.foodexceptions.FoodNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class ReviewService {
     }
 
     public ReviewResponseDto saveReview(CreateReviewDto dto) {
-        Food food = foodRepository.getReferenceById(dto.foodId());
+        Food food = foodRepository.findById(dto.foodId())
+                .orElseThrow(() -> new FoodNotFoundException("Food with id " + dto.foodId() + " does not exist"));
 
         Review review = new Review();
         review.setStudentNumber(dto.studentNumber());
