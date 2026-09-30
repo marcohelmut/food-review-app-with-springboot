@@ -50,4 +50,25 @@ public class FoodController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getTotalFoodCount() {
+        long count = foodService.getTotalFoodCount();
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/priceRank")
+    public ResponseEntity<List<FoodResponseDto>> getPriceRanking() {
+        return ResponseEntity.ok(foodService.getPriceRanking());
+    }
+
+    @GetMapping("/tasteRank")
+    public ResponseEntity<List<FoodResponseDto>> getTasteRanking() {
+        return ResponseEntity.ok(foodService.getTasteRanking());
+    }
+
+    @GetMapping("/cleanlinessRank")
+    public ResponseEntity<List<FoodResponseDto>> getCleanlinessRanking() {
+        return ResponseEntity.ok(foodService.getCleanlinessRanking());
+    }
+
 }
