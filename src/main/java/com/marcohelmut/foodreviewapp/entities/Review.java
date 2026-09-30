@@ -16,6 +16,9 @@ public class Review {
     @Column(name = "student_number", nullable = false)
     private Integer studentNumber;
 
+    @Column(name = "student_nickname", nullable = false)
+    private String studentNickname;
+
     @Column(name = "price_score", nullable = false)
     private Integer priceScore;
 
@@ -41,8 +44,9 @@ public class Review {
 
     public Review() {}
 
-    public Review(Integer studentNumber, Integer priceScore, Integer tasteScore, Integer cleanlinessScore, String comment) {
+    public Review(Integer studentNumber,String studentNickname, Integer priceScore, Integer tasteScore, Integer cleanlinessScore, String comment) {
         this.studentNumber = studentNumber;
+        this.studentNickname = studentNickname;
         this.priceScore = priceScore;
         this.tasteScore = tasteScore;
         this.cleanlinessScore = cleanlinessScore;
@@ -55,6 +59,10 @@ public class Review {
 
     public Integer getStudentNumber() {
         return studentNumber;
+    }
+
+    public String getStudentNickname() {
+        return studentNickname;
     }
 
     public Integer getPriceScore() {
@@ -91,6 +99,10 @@ public class Review {
 
     public void setStudentNumber(Integer studentNumber) {
         this.studentNumber = studentNumber;
+    }
+
+    public void setStudentNickname(String studentNickname) {
+        this.studentNickname = studentNickname;
     }
 
     public void setPriceScore(Integer priceScore) {

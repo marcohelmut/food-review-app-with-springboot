@@ -30,6 +30,7 @@ public class ReviewService {
 
         Review review = new Review();
         review.setStudentNumber(dto.studentNumber());
+        review.setStudentNickname(dto.studentNickname());
         review.setPriceScore(dto.priceScore());
         review.setTasteScore(dto.tasteScore());
         review.setCleanlinessScore(dto.cleanlinessScore());
@@ -42,11 +43,13 @@ public class ReviewService {
         return new ReviewResponseDto(
                 savedReview.getId(),
                 savedReview.getStudentNumber(),
+                savedReview.getStudentNickname(),
                 savedReview.getPriceScore(),
                 savedReview.getTasteScore(),
                 savedReview.getCleanlinessScore(),
                 savedReview.getComment(),
-                savedReview.getFood().getId()
+                savedReview.getFood().getId(),
+                savedReview.getCreatedAt()
         );
     }
 

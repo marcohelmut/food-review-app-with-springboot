@@ -3,10 +3,13 @@ package com.marcohelmut.foodreviewapp.dtos.reviewdtos;
 import jakarta.validation.constraints.*;
 
 public record CreateReviewDto(
-        @NotNull(message = "Student Number cannot be empty.")
+        @NotNull(message = "Student Number is required.")
         @Min(value = 100000, message = "Student number must be six digits.")
         @Max(value = 999999, message = "Student number must be six digits.")
         Integer studentNumber,
+
+        @NotBlank(message = "Please include a nickname")
+        String studentNickname,
 
         @NotNull(message = "Please include a price score.")
         @Min(value = 1, message = "Price score must be between 1 to 5.")
@@ -23,6 +26,7 @@ public record CreateReviewDto(
         @Max(value = 5, message = "Cleanliness score must be between 1 to 5.")
         Integer cleanlinessScore,
 
+        @Size(max = 100, message = "Comment must be below 100 characters")
         String comment,
 
         @NotNull(message = "A review must be associated with a food item.")
