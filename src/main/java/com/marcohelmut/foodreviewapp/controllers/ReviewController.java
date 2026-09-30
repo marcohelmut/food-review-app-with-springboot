@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.service.annotation.GetExchange;
 
 import java.util.List;
 
@@ -33,5 +34,10 @@ public class ReviewController {
     public ResponseEntity<List<ReviewResponseDto>> getReviewsByFood(@PathVariable Long id) {
         List<ReviewResponseDto> reviews = reviewService.getReviewsByFood(id);
         return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getReviewCount() {
+        return ResponseEntity.ok(reviewService.getReviewCount());
     }
 }

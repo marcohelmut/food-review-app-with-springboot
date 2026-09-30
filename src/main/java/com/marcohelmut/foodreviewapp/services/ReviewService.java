@@ -74,4 +74,8 @@ public class ReviewService {
                 .toList();
     }
 
+    public Long getReviewCount() {
+        return reviewRepository.count();
+    }
+
 }

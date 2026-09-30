@@ -28,7 +28,7 @@ public class StallController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStall);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<StallResponseDto> getStallByName(@PathVariable String name) {
         StallResponseDto stall = stallService.getStallByName(name);
         return ResponseEntity.ok(stall);
@@ -44,6 +44,16 @@ public class StallController {
     public ResponseEntity<Void> deleteStallById(@PathVariable Long id) {
         stallService.deleteStall(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StallResponseDto> getStall(@PathVariable Long id) {
+        return ResponseEntity.ok(stallService.getStall(id));
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getStallCount() {
+        return ResponseEntity.ok(stallService.getStallCount());
     }
 
 }

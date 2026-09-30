@@ -1,5 +1,6 @@
 package com.marcohelmut.foodreviewapp.services;
 
+import com.marcohelmut.foodreviewapp.dtos.fooddtos.FoodResponseDto;
 import com.marcohelmut.foodreviewapp.dtos.stalldtos.CreateStallDto;
 import com.marcohelmut.foodreviewapp.dtos.stalldtos.StallResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Stall;
@@ -66,6 +67,19 @@ public class StallService {
         Stall stall = stallRepository.findById(id)
                 .orElseThrow(() -> new StallNotFoundException("Stall with id " + id + " does not exist"));
         stallRepository.delete(stall);
+    }
+
+    public StallResponseDto getStall(Long id) {
+        return stallRepository.findById(id).map(stall -> new StallResponseDto(
+                        stall.getId(),
+                        stall.getName(),
+                        stall.getPhotoFilePath()
+                ))
+                .orElseThrow(() -> new StallNotFoundException("Stall with id " + id + " not found"));
+    }
+
+    public long getStallCount() {
+        return stallRepository.count();
     }
 
 }
