@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -51,6 +52,26 @@ public class ReviewService {
                 savedReview.getFood().getId(),
                 savedReview.getCreatedAt()
         );
+    }
+
+    public List<ReviewResponseDto> getReviewsByFood(Long id) {
+        if (!foodRepository.existsById(id)) {
+            throw new FoodNotFoundException("Food with id " + id + " not found");
+        }
+
+        return reviewRepository.findByFoodId(id).stream()
+                .map(review -> new ReviewResponseDto(
+                        review.getId(),
+                        review.getStudentNumber(),
+                        review.getStudentNickname(),
+                        review.getPriceScore(),
+                        review.getTasteScore(),
+                        review.getCleanlinessScore(),
+                        review.getComment(),
+                        review.getFood().getId(),
+                        review.getCreatedAt()
+                ))
+                .toList();
     }
 
 }

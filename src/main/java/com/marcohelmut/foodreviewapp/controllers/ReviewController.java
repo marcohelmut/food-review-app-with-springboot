@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/reviews")
 public class ReviewController {
@@ -25,5 +27,11 @@ public class ReviewController {
     public ResponseEntity<ReviewResponseDto> createReview(@Valid @RequestBody CreateReviewDto review) {
         ReviewResponseDto savedReview = reviewService.saveReview(review);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
+    }
+
+    @GetMapping("/foods/{id}")
+    public ResponseEntity<List<ReviewResponseDto>> getReviewsByFood(@PathVariable Long id) {
+        List<ReviewResponseDto> reviews = reviewService.getReviewsByFood(id);
+        return ResponseEntity.ok(reviews);
     }
 }
