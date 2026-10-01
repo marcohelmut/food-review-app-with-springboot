@@ -2,16 +2,12 @@ package com.marcohelmut.foodreviewapp.controllers;
 
 import com.marcohelmut.foodreviewapp.dtos.fooddtos.CreateFoodDto;
 import com.marcohelmut.foodreviewapp.dtos.fooddtos.FoodResponseDto;
-import com.marcohelmut.foodreviewapp.entities.Food;
-import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.services.FoodService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 
@@ -22,7 +18,7 @@ public class FoodController {
     private final FoodService foodService;
 
     @Autowired
-    public FoodController(FoodRepository foodRepository, FoodService foodService) {
+    public FoodController(FoodService foodService) {
         this.foodService = foodService;
     }
 
@@ -45,7 +41,7 @@ public class FoodController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFoodById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
         foodService.deleteFood(id);
         return ResponseEntity.noContent().build();
     }
@@ -56,17 +52,17 @@ public class FoodController {
         return ResponseEntity.ok(count);
     }
 
-    @GetMapping("/priceRank")
+    @GetMapping("/rankings/price")
     public ResponseEntity<List<FoodResponseDto>> getPriceRanking() {
         return ResponseEntity.ok(foodService.getPriceRanking());
     }
 
-    @GetMapping("/tasteRank")
+    @GetMapping("/rankings/taste")
     public ResponseEntity<List<FoodResponseDto>> getTasteRanking() {
         return ResponseEntity.ok(foodService.getTasteRanking());
     }
 
-    @GetMapping("/cleanlinessRank")
+    @GetMapping("/rankings/cleanliness")
     public ResponseEntity<List<FoodResponseDto>> getCleanlinessRanking() {
         return ResponseEntity.ok(foodService.getCleanlinessRanking());
     }
