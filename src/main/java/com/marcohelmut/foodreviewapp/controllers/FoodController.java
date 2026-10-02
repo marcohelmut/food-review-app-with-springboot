@@ -4,6 +4,8 @@ import com.marcohelmut.foodreviewapp.dtos.fooddtos.CreateFoodDto;
 import com.marcohelmut.foodreviewapp.dtos.fooddtos.FoodResponseDto;
 import com.marcohelmut.foodreviewapp.services.FoodService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("/api/foods")
 public class FoodController {
 
+    private static final Logger logger = LoggerFactory.getLogger(FoodController.class);
+
     private final FoodService foodService;
 
     @Autowired
@@ -24,6 +28,7 @@ public class FoodController {
 
     @PostMapping
     public ResponseEntity<FoodResponseDto> createFood(@Valid @RequestBody CreateFoodDto food) {
+        logger.info("Create food request received: {}", food.name());
         FoodResponseDto savedFood = foodService.saveFood(food);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
     }
@@ -42,6 +47,7 @@ public class FoodController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
+        logger.info("Delete food request received with id: {}", id);
         foodService.deleteFood(id);
         return ResponseEntity.noContent().build();
     }

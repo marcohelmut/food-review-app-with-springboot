@@ -4,6 +4,8 @@ import com.marcohelmut.foodreviewapp.dtos.stalldtos.CreateStallDto;
 import com.marcohelmut.foodreviewapp.dtos.stalldtos.StallResponseDto;
 import com.marcohelmut.foodreviewapp.services.StallService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("/api/stalls")
 public class StallController {
 
+    private static final Logger logger = LoggerFactory.getLogger(StallController.class);
+
     private final StallService stallService;
 
     @Autowired
@@ -24,6 +28,7 @@ public class StallController {
 
     @PostMapping
     public ResponseEntity<StallResponseDto> createStall(@Valid @RequestBody CreateStallDto dto) {
+        logger.info("Create stall request received: {}", dto.name());
         StallResponseDto savedStall = stallService.saveStall(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStall);
     }
@@ -42,6 +47,7 @@ public class StallController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStallById(@PathVariable Long id) {
+        logger.info("Delete stall request received: {}", id);
         stallService.deleteStall(id);
         return ResponseEntity.noContent().build();
     }
