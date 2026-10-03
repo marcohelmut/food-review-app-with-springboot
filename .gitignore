@@ -31,3 +31,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# SSL / KeyStore files
+*.p12
+*.jks
+*.pfx
+*.pem
+*.crt
+*.key
+
+# Local environment files (if using .env or application-local profiles)
+application-local.properties
+application-dev.properties
+.env
