@@ -1,0 +1,52 @@
+package com.marcohelmut.foodreviewapp.security;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Date;
+
+@Component
+@Slf4j
+public class JwtUtil {
+
+    private String token = System.getenv("SECRET_KEY");
+    private SecretKey key;
+
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(token.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date((new Date()).getTime() + (1000 * 60 * 60)))
+                .signWith(key)
+                .compact();
+    }
+
+    public String getUserFromToken(String token) {
+        return Jwts.parser().verifyWith(key).build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
+            return true;
+        } catch (Exception e) {
+            log.error("JWT validation error: " + e.getMessage());
+        }
+        return false;
+    }
+
+}
