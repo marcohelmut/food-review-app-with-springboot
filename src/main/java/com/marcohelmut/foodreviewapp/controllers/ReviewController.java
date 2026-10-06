@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.service.annotation.GetExchange;
 
@@ -25,6 +26,7 @@ public class ReviewController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ReviewResponseDto> createReview(@Valid @RequestBody CreateReviewDto review) {
         ReviewResponseDto savedReview = reviewService.saveReview(review);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);

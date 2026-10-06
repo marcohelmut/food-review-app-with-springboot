@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class FoodController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<FoodResponseDto> createFood(@Valid @RequestBody CreateFoodDto food) {
         logger.info("Create food request received: {}", food.name());
         FoodResponseDto savedFood = foodService.saveFood(food);
@@ -46,6 +48,7 @@ public class FoodController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
         logger.info("Delete food request received with id: {}", id);
         foodService.deleteFood(id);
