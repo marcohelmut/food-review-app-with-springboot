@@ -5,6 +5,8 @@ import com.marcohelmut.foodreviewapp.dtos.reviewdtos.ReviewResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Review;
 import com.marcohelmut.foodreviewapp.services.ReviewService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping("/api/reviews")
 public class ReviewController {
 
+    private static final Logger logger = LoggerFactory.getLogger(StallController.class);
+
     private final ReviewService reviewService;
 
     @Autowired
@@ -26,7 +30,6 @@ public class ReviewController {
     }
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ReviewResponseDto> createReview(@Valid @RequestBody CreateReviewDto review) {
         ReviewResponseDto savedReview = reviewService.saveReview(review);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
@@ -41,5 +44,13 @@ public class ReviewController {
     @GetMapping("/count")
     public ResponseEntity<Long> getReviewCount() {
         return ResponseEntity.ok(reviewService.getReviewCount());
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+        logger.info("Delete stall request received: {}", id);
+        reviewService.deleteReview(id);
+        return ResponseEntity.noContent().build();
     }
 }

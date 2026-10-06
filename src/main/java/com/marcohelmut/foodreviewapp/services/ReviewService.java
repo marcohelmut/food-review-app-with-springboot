@@ -5,6 +5,7 @@ import com.marcohelmut.foodreviewapp.dtos.reviewdtos.ReviewResponseDto;
 import com.marcohelmut.foodreviewapp.entities.Food;
 import com.marcohelmut.foodreviewapp.entities.Review;
 import com.marcohelmut.foodreviewapp.exceptions.foodexceptions.FoodNotFoundException;
+import com.marcohelmut.foodreviewapp.exceptions.reviewexceptions.ReviewNotFoundException;
 import com.marcohelmut.foodreviewapp.repositories.FoodRepository;
 import com.marcohelmut.foodreviewapp.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,12 @@ public class ReviewService {
 
     public Long getReviewCount() {
         return reviewRepository.count();
+    }
+
+    public void deleteReview(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException("Review with id " + id + " does not exist"));
+        reviewRepository.delete(review);
     }
 
 }
