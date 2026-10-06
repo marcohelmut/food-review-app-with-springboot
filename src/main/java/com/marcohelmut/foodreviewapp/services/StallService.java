@@ -82,4 +82,19 @@ public class StallService {
         return stallRepository.count();
     }
 
+    public StallResponseDto updateStall(StallResponseDto dto) {
+        Stall stall = stallRepository.findById(dto.id())
+                .orElseThrow(() -> new StallNotFoundException("Stall not found"));
+
+        stall.setName(dto.name().trim());
+
+        Stall returnedStall = stallRepository.save(stall);
+
+        return new StallResponseDto(
+                stall.getId(),
+                stall.getName(),
+                stall.getPhotoFilePath()
+        );
+    }
+
 }

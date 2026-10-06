@@ -35,6 +35,14 @@ public class StallController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStall);
     }
 
+    @PutMapping
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<StallResponseDto> updateStall( @RequestBody StallResponseDto dto) {
+        logger.info("Update stall request received: {}", dto.name());
+        StallResponseDto updatedStall = stallService.updateStall(dto);
+        return ResponseEntity.ok(updatedStall);
+    }
+
     @GetMapping("/name/{name}")
     public ResponseEntity<StallResponseDto> getStallByName(@PathVariable String name) {
         StallResponseDto stall = stallService.getStallByName(name);
